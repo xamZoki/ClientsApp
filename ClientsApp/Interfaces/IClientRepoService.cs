@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ClientsApp.Interfaces
 {
-    public interface IDataGetAllService
+    public interface IClientRepoService
     {
         Task<List<Models.Client>> GetAll();
     }

@@ -19,7 +19,7 @@ namespace ClientsApp.ViewModels
         // Services
         private IDataImportService _dataImportService;
         private IDataExportService _dataExportService;
-        private IDataGetAllService _dataAllService;
+        private IClientRepoService _clientRepoService;
         private IDataAddItemService _dataAddItemService;
 
 
@@ -129,11 +129,11 @@ namespace ClientsApp.ViewModels
                 }
             });
 
-        public ClientsViewModel(IDataExportService dataExportService, IDataImportService dataImportService, IDataGetAllService dataGetAllService, IDataAddItemService dataAddItemService)
+        public ClientsViewModel(IDataExportService dataExportService, IDataImportService dataImportService, IClientRepoService clientRepoService, IDataAddItemService dataAddItemService)
         {
             _dataExportService = dataExportService;
             _dataImportService = dataImportService;
-            _dataAllService = dataGetAllService;
+            _clientRepoService = clientRepoService;
             _dataAddItemService = dataAddItemService;
             Clients = new ObservableRangeCollection<Models.Client>();
             AddClientCommand = new RelayCommand(AddClient, CanAdd);
@@ -143,7 +143,7 @@ namespace ClientsApp.ViewModels
 
         public async Task GetAllClientsOnStart()
         {
-            foreach (var item in await _dataAllService.GetAll())
+            foreach (var item in await _clientRepoService.GetAll())
             {
                 Clients.Add(item);
             }
@@ -151,14 +151,21 @@ namespace ClientsApp.ViewModels
 
         private void AddClient()
         {
-                Models.Client client = new Models.Client(0, Name, Birthday.Value, HomeAddress, WeekendAddress);
-                _dataAddItemService.AddItem(client);
-                Clients.Clear();
-                foreach (var item in _dataAllService.GetAll().Result)
+            Application.Current.Dispatcher.Invoke(
+                () =>
                 {
-                    Clients.Add(item);
-                }
-                ClearFields();
+
+                    Models.Client client = new Models.Client(0, Name, Birthday.Value, HomeAddress, WeekendAddress);
+                    _dataAddItemService.AddItem(client);
+                    Clients.Clear();
+                    foreach (var item in _clientRepoService.GetAll().Result)
+                    {
+                        Clients.Add(item);
+                    }
+                    ClearFields();
+                });
+         
+             
         }
         private bool CanAdd()
         {
@@ -215,13 +222,13 @@ namespace ClientsApp.ViewModels
           
             Clients.Clear();
             var clients = _dataImportService.ImportFromXml(xml);
-            if (clients.Count > 0)
+            if (clients.Any())
             {
                 foreach (var item in clients)
                 {
                     _dataAddItemService.AddItem(item);
                 }
-                foreach (var item in _dataAllService.GetAll().Result)
+                foreach (var item in _clientRepoService.GetAll().Result)
                 {
                     Clients.Add(item);
                 }

@@ -20,12 +20,12 @@ namespace ClientsApp
                 {
                     services.AddSingleton<IDataExportService, DataExportService>();
                     services.AddSingleton<IDataImportService, DataImportService>();
-                    services.AddSingleton<IDataGetAllService, DataGetAllService>();
+                    services.AddSingleton<IClientRepoService, ClientRepoService>();
                     services.AddSingleton<IDataAddItemService, DataAddItemService>();
                     services.AddSingleton<ClientsViewModel>(x => new ClientsViewModel
                     (x.GetRequiredService<IDataExportService>(), 
                      x.GetRequiredService<IDataImportService>(), 
-                     x.GetRequiredService<IDataGetAllService>(), 
+                     x.GetRequiredService<IClientRepoService>(), 
                      x.GetRequiredService<IDataAddItemService>()));
                     services.AddSingleton<MainWindow>((z) => new MainWindow{ DataContext = z.GetRequiredService<ClientsViewModel>()});
 
@@ -41,7 +41,6 @@ namespace ClientsApp
         {
             await AppHost!.StartAsync();
             var startUpForm = AppHost.Services.GetRequiredService<MainWindow>();
-            //startUpForm.DataContext = AppHost.Services.GetRequiredService<ClientsViewModel>();
             startUpForm.Show();
             
             base.OnStartup(e);

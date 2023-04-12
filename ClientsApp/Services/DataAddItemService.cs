@@ -15,8 +15,8 @@ namespace ClientsApp.Services
 
         public DataAddItemService()
         {
-            client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:5132/");
+            client = new HttpClient(); 
+            client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["url"]);
         }
         public bool AddItem(Models.Client clientDto)
         {
@@ -28,7 +28,7 @@ namespace ClientsApp.Services
             var json = JsonConvert.SerializeObject(c);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = client.PutAsync("api/client/PutClient", content).Result;
+            HttpResponseMessage response = client.PutAsync("api/client/AddClient", content).Result;
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode) return true; else return false;

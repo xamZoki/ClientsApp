@@ -20,20 +20,11 @@ namespace ClientsAPI.Controllers
             return clients;
         }
 
-        [HttpPut("PutClient")]
-        public async Task<bool> PutClient([FromBody] Client client)
+        [HttpPut("AddClient")]
+        public async Task AddClient([FromBody] Client client)
         {
-            try
-            {
                 await _context.Clients.AddAsync(client);
                 _context.SaveChanges();
-                return true;
-                        
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
         }
         
     }

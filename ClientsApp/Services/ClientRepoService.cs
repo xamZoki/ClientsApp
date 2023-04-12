@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace ClientsApp.Services
 {
-    public class DataGetAllService : IDataGetAllService
+    public class ClientRepoService : IClientRepoService
     {
         HttpClient client;
-        public DataGetAllService()
+        
+        public ClientRepoService()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:5132/");
+            client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["url"]);
         }
 
         public async Task<List<Client>> GetAll()
