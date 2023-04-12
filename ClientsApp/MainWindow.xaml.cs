@@ -27,19 +27,5 @@ namespace ClientsApp
         {
             InitializeComponent();
         }
-        private void btnOpenFile_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
-                txtEditor.Text = File.ReadAllText(openFileDialog.FileName);
-
-            var vm = DataContext as ClientsViewModel;
-            var isValidFile =  vm.AddlClientsFromXml(openFileDialog.FileName);
-            if (!isValidFile)
-            {
-                txtEditor.Text = "not valid structure"; 
-            }
-       }
     }
 }

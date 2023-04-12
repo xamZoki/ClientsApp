@@ -1,9 +1,11 @@
 ﻿using ClientsApp.Interfaces;
+using Microsoft.Win32;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,6 +27,7 @@ namespace ClientsApp.ViewModels
         private DateTime? _birthday;
         private string _homeAddress;
         private string _weekendAddress;
+        private string _sourceText;
         private ObservableCollection<Models.Client> clients;
 
         public string Name
@@ -66,6 +69,15 @@ namespace ClientsApp.ViewModels
                 OnPropertyChanged();
             }
         }
+        public string SourceText
+        {
+            get { return _sourceText; }
+            set
+            {
+                _sourceText = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<Models.Client> Clients
         {
@@ -101,6 +113,21 @@ namespace ClientsApp.ViewModels
             }
             else MessageBox.Show("Unsucessafully try to saved to local json file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         });
+        public ICommand AddXmlCommand => new Command(
+            () => 
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog() == true)
+                    SourceText = File.ReadAllText(openFileDialog.FileName);
+
+                
+                var isValidFile = AddlClientsFromXml(openFileDialog.FileName);
+                if (!isValidFile)
+                {
+                    SourceText = "not valid structure";
+                }
+            });
 
         public ClientsViewModel(IDataExportService dataExportService, IDataImportService dataImportService, IDataGetAllService dataGetAllService, IDataAddItemService dataAddItemService)
         {

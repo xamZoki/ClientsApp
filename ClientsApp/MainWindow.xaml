@@ -37,7 +37,7 @@
         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Add Client" Command="{Binding AddClientCommand}" Margin="5"/>
         <Button Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="1" Content="Export table to JSON" Command="{Binding ExportToJsonCommand}" Margin="5"/>
         <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" ItemsSource="{Binding Clients}" Margin="5" AutoGenerateColumns="True"/>
-        <TextBox Name="txtEditor"  Grid.Row="0" Grid.RowSpan="4" Grid.Column="4"/>
+        <TextBox Name="txtEditor"  Text="{Binding SourceText}" Grid.Row="0" Grid.RowSpan="4" Grid.Column="4"/>
 
         <StackPanel   Grid.Row="2" Grid.RowSpan="2" Grid.Column="2"  Grid.ColumnSpan="3">
             <RadioButton Command="{Binding OrderClientsCommand}" CommandParameter="Name" IsChecked="True" >Order by Name</RadioButton>
@@ -46,8 +46,8 @@
         </StackPanel>
 
         <DockPanel  Grid.Row="4" Grid.Column="3" Margin="5">
-           
-                <Button Name="btnOpenFile" Click="btnOpenFile_Click">Add Xml file</Button>
+
+            <Button Name="btnOpenFile" Command="{Binding AddXmlCommand}">Add Xml file</Button>
          
         </DockPanel>
     </Grid>
