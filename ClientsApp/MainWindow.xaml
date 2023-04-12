@@ -1,0 +1,54 @@
+﻿<Window x:Class="ClientsApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.4*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="0.25*"/>
+            <ColumnDefinition Width="0.25*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="Name:"/>
+        <TextBox  Grid.Row="0" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Margin="5"></TextBox>
+        
+        
+        <Label Grid.Row="1" Grid.Column="0" Content="Birthday:"/>
+            <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Margin="5"/>
+        
+        <Label Grid.Row="2" Grid.Column="0" Content="Home Address:"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding HomeAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Margin="5"/>
+        <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent}" Grid.Row="3" Foreground="Red"/>
+        
+        <Label Grid.Row="3" Grid.Column="0" Content="Weekend Address:"/>
+
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding WeekendAddress, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Add Client" Command="{Binding AddClientCommand}" Margin="5"/>
+        <Button Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="1" Content="Export table to JSON" Command="{Binding ExportToJsonCommand}" Margin="5"/>
+        <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" ItemsSource="{Binding Clients}" Margin="5" AutoGenerateColumns="True"/>
+        <TextBox Name="txtEditor"  Grid.Row="0" Grid.RowSpan="4" Grid.Column="4"/>
+
+        <StackPanel   Grid.Row="2" Grid.RowSpan="2" Grid.Column="2"  Grid.ColumnSpan="3">
+            <RadioButton Command="{Binding OrderClientsCommand}" CommandParameter="Name" IsChecked="True" >Order by Name</RadioButton>
+            <RadioButton Command="{Binding OrderClientsCommand}" CommandParameter="Birthday">Order by BirthDay</RadioButton>
+            <RadioButton IsChecked="true" Command="{Binding OrderClientsCommand}" CommandParameter="ID">Order by ID </RadioButton>
+        </StackPanel>
+
+        <DockPanel  Grid.Row="4" Grid.Column="3" Margin="5">
+           
+                <Button Name="btnOpenFile" Click="btnOpenFile_Click">Add Xml file</Button>
+         
+        </DockPanel>
+    </Grid>
+</Window>

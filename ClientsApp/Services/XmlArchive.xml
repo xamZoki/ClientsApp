@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Clients>
+  <Client ID="3">
+    <Name>Ime1</Name>
+    <Addresses>
+      <Address Type="1">Home addres</Address>
+      <Address Type="2">Vikend addres</Address>
+      </Addresses>
+      <BirthDate>01.09.2001</BirthDate>
+    </Client>
+  <Client ID="5">
+    <Name>Ime2</Name>
+    <Addresses>
+      <Address Type="1">Home addres</Address>
+      <Address Type="2">Vikend addres</Address>
+      </Addresses>
+      <BirthDate>01.09.2003</BirthDate>
+</Client>
+  <Client ID="4">
+    <Name>Ime2</Name>
+    <Addresses>
+      <Address Type="1">Home addres</Address>
+      <Address Type="2">Vikend addres</Address>
+    </Addresses>
+    <BirthDate>01.09.2003</BirthDate>
+  </Client>
+</Clients>
